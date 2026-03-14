@@ -1,11 +1,11 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Privacy Policy - My Arabic Language App</title>
-    <style>
+import re
 
+with open('index.html', 'r', encoding='utf-8') as f:
+    content = f.read()
+
+# Let's completely redesign the CSS and the Arabic section to make it look great for an app store.
+
+new_style = """
       @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
       
       body {
@@ -125,111 +125,16 @@
         font-weight: bold;
         font-size: 1.1em;
       }
+"""
 
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="lang-switch">
-        <a href="#english">English</a>
-        <a href="#arabic">العربية</a>
-      </div>
+# Replace styles
+content = re.sub(r'<style>.*?</style>', f'<style>\n{new_style}\n    </style>', content, flags=re.DOTALL)
 
-      <!-- English Section -->
-      <div id="english" class="section-en">
-        <h1 class="policy-title">Privacy Policy</h1>
-        <p><strong>Effective Date:</strong> March 14, 2026</p>
-        <p>
-          This privacy policy applies to the
-          <strong>العربية لغتي (Arabic is My Language)</strong> app (hereby referred to as
-          "Application") for mobile devices. This page is used to inform
-          visitors regarding our policies with the collection, use, and
-          disclosure of Personal Information if anyone decided to use our
-          Service. This privacy policy complies with Google Play's User Data
-          Policy.
-        </p>
+# Update English section mention of the app
+content = content.replace("<strong>العربية لغتي</strong> app", "<strong>العربية لغتي (Arabic is My Language)</strong> app")
 
-        <h2>1. Information Collection and Use</h2>
-        <p>
-          For a better experience, while using our Service, we may require you
-          to provide us with certain personally identifiable information. The
-          information that we request will be retained by us and used as
-          described in this privacy policy.
-        </p>
-        <p>
-          The app does use third-party services that may collect information
-          used to identify you. Link to the privacy policy of third-party
-          service providers used by the app:
-        </p>
-        <ul>
-          <li>
-            <a href="https://policies.google.com/privacy" target="_blank"
-              >Google Play Services</a
-            >
-          </li>
-          <li>
-            <a href="https://auth0.com/privacy" target="_blank"
-              >Auth0 (Authentication Services)</a
-            >
-          </li>
-        </ul>
-
-        <h2>2. Log Data & Crash Reporting</h2>
-        <p>
-          We want to inform you that whenever you use our Service, in a case of
-          an error in the app we collect data and information (through
-          third-party products) on your phone called Log Data. This Log Data may
-          include information such as your device Internet Protocol ("IP")
-          address, device name, operating system version, the configuration of
-          the app when utilizing our Service, the time and date of your use of
-          the Service, and other statistics to help us fix crashes and improve
-          the app.
-        </p>
-
-        <h2>3. Security</h2>
-        <p>
-          We value your trust in providing us your Personal Information, thus we
-          are striving to use commercially acceptable means of protecting it.
-          But remember that no method of transmission over the internet, or
-          method of electronic storage is 100% secure and reliable, and we
-          cannot guarantee its absolute security.
-        </p>
-
-        <h2>4. Children’s Privacy</h2>
-        <p>
-          These Services do not address anyone under the age of 13. We do not
-          knowingly collect personally identifiable information from children
-          under 13 years of age. In the case we discover that a child under 13
-          has provided us with personal information, we immediately delete this
-          from our servers. If you are a parent or guardian and you are aware
-          that your child has provided us with personal information, please
-          contact us.
-        </p>
-
-        <h2>5. Changes to This Privacy Policy</h2>
-        <p>
-          We may update our Privacy Policy from time to time. Thus, you are
-          advised to review this page periodically for any changes. We will
-          notify you of any changes by posting the new Privacy Policy on this
-          page.
-        </p>
-
-        <h2>6. Contact Us</h2>
-        <p>
-          If you have any questions or suggestions about our Privacy Policy, do
-          not hesitate to contact us at:
-        </p>
-        <ul>
-          <li>
-            <strong>Email:</strong>
-            <span style="color: #e74c3c; font-weight: bold"
-              >mahmoudkaramelasaly@gmail.com</span
-            >
-          </li>
-        </ul>
-      </div>
-
-      
+# completely rewrite the Arabic Section
+arabic_section_html = """
       <!-- Arabic Section -->
       <div id="arabic" class="section-ar">
         <div class="app-title-container">
@@ -316,7 +221,12 @@
           </li>
         </ul>
       </div>
+"""
 
-    </div>
-  </body>
-</html>
+content = re.sub(r'<!-- Arabic Section -->.*</div>\s*</div>\s*</body>', arabic_section_html + '\n    </div>\n  </body>', content, flags=re.DOTALL)
+content = content.replace('<h1>Privacy Policy</h1>', '<h1 class="policy-title">Privacy Policy</h1>')
+
+with open('index.html', 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print("Updated index.html successfully.")
